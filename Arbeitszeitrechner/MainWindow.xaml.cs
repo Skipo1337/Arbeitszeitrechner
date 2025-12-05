@@ -30,20 +30,15 @@ namespace Arbeitszeitrechner
             var tb = sender as TextBox;
             if (tb == null) return;
             
-
-
-            // Prüfen, ob Eingabe eine gültige Zeit im Format HH:mm ist
             if (DateTime.TryParseExact(tb.Text, "HH:mm", CultureInfo.InvariantCulture,
                 DateTimeStyles.None, out _))
             {
                 tb.Background = Brushes.White;
             }
-
             else if (string.IsNullOrEmpty(tb.Text))
             {
                 tb.Background = Brushes.White;
             }
-
             else
             {
                 tb.Background = Brushes.LightCoral;
@@ -73,9 +68,12 @@ namespace Arbeitszeitrechner
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            CalculateWorkedTime arbeitszeitrechner = new CalculateWorkedTime();
+
+            CalculateTimes arbeitszeitrechner = new();
             TimeSpan wochenArbeitszeit = TimeSpan.Parse(Properties.Settings.Default.Wochenstunden);
             TimeSpan pausenMinuten;
+            TimeSpan weekWorked = TimeSpan.Zero;
+            var daysWorked = 5; //Properties.Settings.Default.AnzahlArbeitstage;
 
             if (int.TryParse(Properties.Settings.Default.Pausenzeit, out int minutenAlsZahl))
             {
@@ -97,28 +95,82 @@ namespace Arbeitszeitrechner
                 wochenArbeitszeit = TimeSpan.FromHours(0);
             }
 
-            var tagesEingaben = new List<(TextBox Von, TextBox Bis, Label aktuellerTag)>
+            var tagesEingaben = new List<(DayOfWeek Wochentag, TextBox Von, TextBox Bis, Label aktuellerTag)>
             {
-                (TextBox_VonMontag, TextBox_BisMontag, MontagLabel),
-                (TextBox_VonDienstag, TextBox_BisDienstag, DienstagLabel),
-                (TextBox_VonMittwoch, TextBox_BisMittwoch, MittwochLabel),
-                (TextBox_VonDonnerstag, TextBox_BisDonnerstag, DonnerstagLabel),
-                (TextBox_VonFreitag, TextBox_BisFreitag, FreitagLabel),
-                (TextBox_VonSamstag, TextBox_BisSamstag, SamstagLabel),
-                (TextBox_VonSonntag, TextBox_BisSonntag, SonntagLabel)
+                (DayOfWeek.Monday,    TextBox_VonMontag,     TextBox_BisMontag,     MontagLabel),
+                (DayOfWeek.Tuesday,   TextBox_VonDienstag,   TextBox_BisDienstag,   DienstagLabel),
+                (DayOfWeek.Wednesday, TextBox_VonMittwoch,   TextBox_BisMittwoch,   MittwochLabel),
+                (DayOfWeek.Thursday,  TextBox_VonDonnerstag, TextBox_BisDonnerstag, DonnerstagLabel),
+                (DayOfWeek.Friday,    TextBox_VonFreitag,    TextBox_BisFreitag,    FreitagLabel),
+                (DayOfWeek.Saturday,  TextBox_VonSamstag,    TextBox_BisSamstag,    SamstagLabel),
+                (DayOfWeek.Sunday,    TextBox_VonSonntag,    TextBox_BisSonntag,    SonntagLabel)
             };
-
-            foreach (var tag in tagesEingaben)
+            try
             {
-                if (!string.IsNullOrEmpty(tag.Von.Text) && !string.IsNullOrWhiteSpace(tag.Bis.Text))
+                foreach (var tag in tagesEingaben)
                 {
-                    TimeOnly vonTime = TimeOnly.Parse(tag.Von.Text);
-                    TimeOnly bisTime = TimeOnly.Parse(tag.Bis.Text);
-                    tag.aktuellerTag.Content = arbeitszeitrechner.GetWorkedTime(vonTime, bisTime, pausenMinuten, wochenArbeitszeit).ToString();
+                TimeOnly vonTime = TimeOnly.Parse(tag.Von.Text);
+                TimeOnly bisTime = TimeOnly.Parse(tag.Bis.Text);
+                    if (!string.IsNullOrEmpty(tag.Von.Text) && !string.IsNullOrWhiteSpace(tag.Bis.Text))
+                    {
+                    
+                    var dayliWorked = arbeitszeitrechner.CalculateDailyBalance(vonTime, bisTime, pausenMinuten, wochenArbeitszeit);
+                    tag.aktuellerTag.Content = dayliWorked.ToString(@"hh\:mm");
+                    
+                        weekWorked += arbeitszeitrechner.CalculateDailyWorkedHours(vonTime, bisTime, pausenMinuten);
+                    
+                    }
+                    if (tag.Wochentag == DateTime.Today.DayOfWeek)
+                    {
+                        TextBlock_EmpfohlenesGehen.Text = arbeitszeitrechner.GetShouldGo(vonTime, wochenArbeitszeit, daysWorked, pausenMinuten).ToString();
+                    }
                 }
             }
+            catch { }
 
-         
+
+            string eingabe = Properties.Settings.Default.Wochenstunden;
+            TimeSpan sollArbeitszeit;
+            if (double.TryParse(eingabe, out double wochenstundenAlsZahl))
+            {
+                sollArbeitszeit = TimeSpan.FromHours(wochenstundenAlsZahl);
+            }
+            else if (TimeSpan.TryParse(eingabe, out sollArbeitszeit))
+            {
+                //wir in else if (TimeSpan.TryParse(eingabe, out sollArbeitszeit)) behandelt
+            }
+            else
+            {
+                sollArbeitszeit = TimeSpan.Zero;
+            }
+            weekWorked = weekWorked - sollArbeitszeit;
+            var converter = new System.Windows.Media.BrushConverter();
+            if (weekWorked < TimeSpan.Zero)
+            {
+                GesamtzeitWocheBorder.Background = (Brush)converter.ConvertFrom("#FFEBEE");
+                GesamtWocheUberschrift.Foreground = (Brush)converter.ConvertFrom("#D32F2F");
+                GesamtWocheUberschrift.Text = "MINUSSTUNDEN";
+                GesamtWocheStundenText.Foreground = (Brush)converter.ConvertFrom("#B71C1C");
+            }
+            else if (weekWorked > TimeSpan.Zero)
+            {
+                GesamtzeitWocheBorder.Background = (Brush)converter.ConvertFrom("#E8F5E9");
+                GesamtWocheUberschrift.Foreground = (Brush)converter.ConvertFrom("#2E7D32");
+                GesamtWocheUberschrift.Text = "ÜBERSTUNDEN";
+
+                GesamtWocheStundenText.Foreground = (Brush)converter.ConvertFrom("#1B5E20");
+            }
+            else
+            {
+                GesamtzeitWocheBorder.Background = (Brush)converter.ConvertFrom("#F0F4FF");
+                GesamtWocheUberschrift.Foreground = (Brush)converter.ConvertFrom("#4A90E2");
+                GesamtWocheUberschrift.Text = "WOCHE";
+
+                GesamtWocheStundenText.Foreground = Brushes.Gray;
+            }
+            string sign = weekWorked < TimeSpan.Zero ? "-" : "";
+            TextBlock_GesamtzeitWoche.Text = sign + weekWorked.Duration().ToString(@"hh\:mm");
+
 
         }
     }
