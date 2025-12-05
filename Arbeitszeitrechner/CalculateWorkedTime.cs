@@ -4,12 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace Arbeitszeitrechner
 {
 
-    public class CalculateTimes
+    public class CalculateWorkedTime
     {
         private TimeOnly vonTime;
         private TimeOnly bisTime;
@@ -18,31 +17,23 @@ namespace Arbeitszeitrechner
 
 
 
-
-        public TimeSpan CalculateDailyBalance(TimeOnly vonTime, TimeOnly bisTime, TimeSpan pause, TimeSpan wochenArbeitsZeit)
+        public TimeSpan GetWorkedTime(TimeOnly vonTime, TimeOnly bisTime, TimeSpan pause, TimeSpan wochenArbeitsZeit)
         {
-
-            var tagesLeistungMitPause = CalculateDailyWorkedHours(vonTime, bisTime, pause);
-            TimeSpan mindestensTagesleistung = wochenArbeitsZeit / 5;
-            var tagesleistungSollIst = tagesLeistungMitPause - mindestensTagesleistung;
-            return tagesleistungSollIst;
-        }
-
-        public TimeSpan CalculateDailyWorkedHours(TimeOnly vonTime, TimeOnly bisTime, TimeSpan pause)
-        {
+            
             if (BisTime < VonTime)
                 throw new InvalidOperationException("'Bis' muss größer sein als 'Von'.");
             var tagesLeistungOhnePause = bisTime - vonTime;
+            Debug.WriteLine("tagesLeistungOhnePause: " + tagesLeistungOhnePause);
             var tagesLeistungMitPause = tagesLeistungOhnePause - pause;
-            return tagesLeistungMitPause;
+            Debug.WriteLine("tagesLeistungMitPause: " + tagesLeistungMitPause);
+            TimeSpan mindestensTagesleistung = wochenArbeitsZeit / 5;
+            Debug.WriteLine("mindestensTagesleistung: " + mindestensTagesleistung);
+            var tagesleistungSollIst = tagesLeistungMitPause - mindestensTagesleistung;
+            Debug.WriteLine("tagesleistungSollIst: " + tagesleistungSollIst);
+            return tagesleistungSollIst;
+
         }
 
-        public TimeOnly GetShouldGo(TimeOnly dailyWorked, TimeSpan wochenArbeitsZeit, int daysWorked, TimeSpan pauseMinuten)
-        {
-            TimeSpan dailyTimeToWork = wochenArbeitsZeit / daysWorked;
-
-            return dailyWorked.Add(dailyTimeToWork + pauseMinuten);
-        }
 
         public TimeOnly VonTime { get => vonTime; set => vonTime = value; }
         public TimeOnly BisTime { get => bisTime; set => bisTime = value; }

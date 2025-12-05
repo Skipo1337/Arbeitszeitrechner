@@ -114,8 +114,7 @@
                 <TextBlock Text="-" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#CCC"/>
                 <TextBox x:Name="TextBox_BisMontag" Grid.Row="1" Grid.Column="3" TextChanged="Check_TimeFormat"
                          Text="{Binding Source={x:Static properties:Settings.Default}, Path=MontagBis, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <Label x:Name="MontagLabel" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right" FontSize="12" Foreground="#666"
-/>
+                <Label x:Name="MontagLabel" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right" FontSize="12" Foreground="#666"/>
 
                 <Label Content="Di" Grid.Row="2" Grid.Column="0"/>
                 <TextBox x:Name="TextBox_VonDienstag" Grid.Row="2" Grid.Column="1" TextChanged="Check_TimeFormat"
@@ -172,29 +171,29 @@
                 <DropShadowEffect Color="Black" Direction="90" BlurRadius="10" ShadowDepth="0" Opacity="0.1"/>
             </StackPanel.Effect>
 
-            <Grid Margin="20,20,20,10">
+            <!--<Grid Margin="20,20,20,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="15"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Border Grid.Column="0" Background="#F0F4FF" CornerRadius="10" Padding="15" x:Name="GesamtzeitWocheBorder">
+                <Border Grid.Column="0" Background="#F0F4FF" CornerRadius="10" Padding="15">
                     <StackPanel>
-                        <TextBlock Text="WOCHE" FontSize="10" FontWeight="Bold" Foreground="#4A90E2" x:Name="GesamtWocheUberschrift"/>
+                        <TextBlock Text="WOCHE" FontSize="10" FontWeight="Bold" Foreground="#4A90E2"/>
                         <TextBlock x:Name="TextBlock_GesamtzeitWoche" Text="00:00" FontSize="22" FontWeight="Bold" Foreground="#333" Margin="0,5,0,0"/>
-                        <TextBlock Text="Stunden" FontSize="10" Foreground="#888" x:Name="GesamtWocheStundenText"/>
+                        <TextBlock Text="Stunden" FontSize="10" Foreground="#888"/>
                     </StackPanel>
                 </Border>
 
                 <Border Grid.Column="2" Background="#FFF8E1" CornerRadius="10" Padding="15">
                     <StackPanel>
-                        <TextBlock Text="HEUTE GEHEN UM" FontSize="10" FontWeight="Bold" Foreground="#FFA000"/>
-                        <TextBlock x:Name="TextBlock_EmpfohlenesGehen" Text="--:--" FontSize="22" FontWeight="Bold" Foreground="#333" Margin="0,5,0,0"/>
+                        <TextBlock Text="GEHEN UM" FontSize="10" FontWeight="Bold" Foreground="#FFA000"/>
+                        <TextBlock x:Name="TextBlock_EmpfohlenesGehen" Text="XX:XX" FontSize="22" FontWeight="Bold" Foreground="#333" Margin="0,5,0,0"/>
                         <TextBlock Text="Uhrzeit" FontSize="10" Foreground="#888"/>
                     </StackPanel>
                 </Border>
-            </Grid>
+            </Grid>-->
 
             <Grid Margin="20,10,20,20">
                 <Grid.ColumnDefinitions>
@@ -208,7 +207,7 @@
                           Fill="#666" Stretch="Uniform" Width="14" Height="14"/>
                 </Button>
 
-                <Button x:Name="Button_Berechnen" Content="BERECHNEN" Click="Button_Click" Style="{StaticResource ModernBtn}" IsDefault="True"
+                <Button x:Name="Button_Berechnen" Content="BERECHNEN" Click="Button_Click" Style="{StaticResource ModernBtn}" 
                         Background="#2a5298" Foreground="White" Grid.Column="1"/>
             </Grid>
         </StackPanel>
