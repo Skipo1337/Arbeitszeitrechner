@@ -1,0 +1,72 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Arbeitszeitrechner.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="MontagVon" Type="System.String" Scope="User">
+      <Value Profile="(Default)">07:00</Value>
+    </Setting>
+    <Setting Name="MontagBis" Type="System.String" Scope="User">
+      <Value Profile="(Default)">14:45</Value>
+    </Setting>
+    <Setting Name="DienstagVon" Type="System.String" Scope="User">
+      <Value Profile="(Default)">07:00</Value>
+    </Setting>
+    <Setting Name="DienstagBis" Type="System.String" Scope="User">
+      <Value Profile="(Default)">14:45</Value>
+    </Setting>
+    <Setting Name="MittwochVon" Type="System.String" Scope="User">
+      <Value Profile="(Default)">07:00</Value>
+    </Setting>
+    <Setting Name="MittwochBis" Type="System.String" Scope="User">
+      <Value Profile="(Default)">14:45</Value>
+    </Setting>
+    <Setting Name="DonnerstagVon" Type="System.String" Scope="User">
+      <Value Profile="(Default)">07:00</Value>
+    </Setting>
+    <Setting Name="DonnerstagBis" Type="System.String" Scope="User">
+      <Value Profile="(Default)">14:45</Value>
+    </Setting>
+    <Setting Name="FreitagVon" Type="System.String" Scope="User">
+      <Value Profile="(Default)">07:00</Value>
+    </Setting>
+    <Setting Name="FreitagBis" Type="System.String" Scope="User">
+      <Value Profile="(Default)">14:45</Value>
+    </Setting>
+    <Setting Name="SamstagVon" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SamstagBis" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SonntagVon" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SonntagBis" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Pausenzeit" Type="System.String" Scope="User">
+      <Value Profile="(Default)">45</Value>
+    </Setting>
+    <Setting Name="Wochenstunden" Type="System.String" Scope="User">
+      <Value Profile="(Default)">35</Value>
+    </Setting>
+    <Setting Name="StandardVon" Type="System.String" Scope="User">
+      <Value Profile="(Default)">07:00</Value>
+    </Setting>
+    <Setting Name="StandardBis" Type="System.String" Scope="User">
+      <Value Profile="(Default)">14:45</Value>
+    </Setting>
+    <Setting Name="AnzahlArbeitstage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="PausenBeginn" Type="System.String" Scope="User">
+      <Value Profile="(Default)">12:00</Value>
+    </Setting>
+    <Setting Name="BenachrichtigungAktiv" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="UeberschreibenAktiv" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
