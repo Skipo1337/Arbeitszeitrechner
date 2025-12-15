@@ -65,3 +65,12 @@ Run Arbeitszeitrechner.exe.
 WPF (Windows Presentation Foundation)
 C#
 XAML
+
+<img width="401" height="686" alt="image" src="https://github.com/user-attachments/assets/e61cb160-6eb9-4351-b114-5afdc493521c" />
+
+<img width="376" height="421" alt="image" src="https://github.com/user-attachments/assets/65029eda-8401-483c-9643-ca85805f8414" />
+
+
+
+
+
